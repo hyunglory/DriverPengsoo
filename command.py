@@ -16,3 +16,12 @@ class Command:
         self.STOP           = '그만'
         self.END            = '종료'
         self.NEXT           = '다음'
+
+
+
+
+class Device:
+
+    def __init__(self):
+        self.SPEAKER = 'SPEAKER'
+        self.CAMERA = 'CAMERA'

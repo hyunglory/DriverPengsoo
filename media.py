@@ -1,13 +1,17 @@
 import pygame
 import speech_recognition as sr
 import random
-from Command import command
+from command import Command
+from command import Device
+from mongodb import MongoDB
 
 class music:
 
     
     def __init__(self):
-        command = Command()
+        self.command = Command()
+        self.device = Device()
+        self.db = MongoDB()
         
         self.music_cmd = ["Playing... - func => playingmusic", "명령 : 1. 그만 | 2. 다음", "명령을 확인중...", "다시 말해 주세요.", "재생을 정지합니다."]
 
@@ -35,7 +39,7 @@ class music:
             
             with sr.Microphone() as source:
                 self.r.adjust_for_ambient_noise(source)
-                print("%s번째 곡 : %s"%((self.count%5)+1, self.filename[self.count%5]))
+                #print("%s번째 곡 : %s"%((self.count%5)+1, self.filename[self.count%5]))
 
                 #print("명령 : 1. 그만 | 2. 다음")
                 print(self.music_cmd[1])
@@ -48,14 +52,14 @@ class music:
                     r2=self.r.recognize_google(self.audio_text,language='ko-KR')
                     print(r2)
                     
-                    if command.STOP in r2:
+                    if self.command.STOP in r2:
                         self.stopmusic()
-                        db.insert_command_one(command.STOP,'',SPEAKER)
+                        self.db.insert_command_one(self.command.STOP,'',self.device.SPEAKER)
                         
-                    elif command.NEXT in r2:
+                    elif self.command.NEXT in r2:
                         self.count+=1
                         self.playmusic(self.filename[self.count%5])
-                        db.insert_command_one(command.NEXT,'',SPEAKER)
+                        self.db.insert_command_one(self.command.NEXT,'',self.device.SPEAKER)
                     
                 except KeyboardInterrupt:
                     self.stopmusic()
@@ -91,9 +95,7 @@ class music:
       2) In try except clause below replace "playmusic()" with "playsound()"
      
 '''
-if __name__ == "__main__":
-               
+if __name__ == "__main__":               
     music=music()
-    pass
     
 

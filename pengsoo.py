@@ -3,13 +3,15 @@ import cv2
 import speech_recognition as sr
 import media
 import servor
-from Command import command
-from MongoDB import mongodb
+from command import Command
+from command import Device
+from mongodb import MongoDB
+import sys
 
 order = ['명령:','입력완료']
 command = Command()
+device = Device()
 db = MongoDB()
-SPEAKER = 'SPEAKER'
 faceCascade = cv2.CascadeClassifier('ha/haarcascade_frontalface_default.xml')
 cap = cv2.VideoCapture(0) # 웹캠 설정
 cap.set(3, 960) # 영상 가로길이 설정
@@ -45,24 +47,24 @@ while True:
                 print(r2)
                 if r2 == command.START_MUSIC:
                     music = media.music()
-                    db.insert_command_one(command.START_MUSIC,'',SPEAKER)
+                    db.insert_command_one(command.START_MUSIC,'',device.SPEAKER)
                 elif r2 == command.GREETING:
                     hi=servor.hi()
                     hi.start(0)
-                    db.insert_command_one(command.GREETING,'',SPEAKER)
+                    db.insert_command_one(command.GREETING,'',device.SPEAKER)
                 elif r2 == command.CAPTURE:
                     cap = cv2.VideoCapture(0)
                     ret, frame = cap.read()
                     cv2.imshow('divx', frame)
                     cv2.imwrite("c.jpg",frame)
                     cap.release()
-                    db.insert_command_one(command.CAPTURE,'',SPEAKER)
+                    db.insert_command_one(command.CAPTURE,'',device.CAMERA)
                 elif r2 == command.END:
-                    db.insert_command_one(command.END,'',SPEAKER)
+                    db.insert_command_one(command.END,'',device.SPEAKER)
                     break
             
             except:
-                print(retry)
+                print(sys.exc_info())
 
 
 
