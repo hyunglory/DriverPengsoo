@@ -15,7 +15,7 @@ class music:
         
         self.music_cmd = ["Playing... - func => playingmusic", "명령 : 1. 그만 | 2. 다음", "명령을 확인중...", "다시 말해 주세요.", "재생을 정지합니다."]
 
-        self.filename = ['music/Do It.mp3', 'music/noma - Color.mp3', 'music/Sakura.mp3', 'music/Dawn.mp3', 'music/Tomorrow.mp3']
+        self.filename = ['media/Do It.mp3', 'media/noma - Color.mp3', 'media/Sakura.mp3', 'media/Dawn.mp3', 'media/Tomorrow.mp3']
 
         self.music_num = random.randrange(0,5)
         
