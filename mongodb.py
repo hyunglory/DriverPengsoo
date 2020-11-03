@@ -12,7 +12,7 @@ ex) {"hi", "Hi, How are you?", "speaker", new Date()}
 class MongoDB:
 
     def __init__(self):    
-        self.host = "192.168.0.136"
+        self.host = "192.168.0.168"
         self.port = "27017"
 
         self.mongo = MongoClient(self.host, int(self.port))
@@ -41,9 +41,9 @@ class MongoDB:
 
     # Command 테이블에 데이터 수정
     def update_command_one(self, data):
-        data = {'input':command, 'output': output, 'device': device}
+        tmp_data = {'input':data.command, 'output': data.output, 'device': data.device}
 
-        result = self.collection.update_one(data).upserted_id
+        result = self.collection.update_one(tmp_data).upserted_id
         print('MongoDB-Update : ', result)
         return result
 
@@ -61,14 +61,14 @@ class MongoDB:
 
 
 '''
-[사용예제]
+#[사용예제]
 if __name__ == "__main__":
     db = MongoDB()        
     # 데이터 삽입
     ret = db.insert_command_one('stop', 'yes,sir!', 'speaker')
     print(ret)
     # 데이터 수정
-    ret = db.update_command_one({'input':'love you', 'output':'what?'})
+    #ret = db.update_command_one({'input':'love you', 'output':'what?'})
     # 방금 삽입된 데이터 호출
     ret2 = db.select_command_One()
     print(ret2)
