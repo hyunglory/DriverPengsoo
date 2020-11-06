@@ -180,7 +180,7 @@ def startFor(method,delay):  # delay초 동안만 실행
     delay = delay
     close_time = time.time() + delay
     while True:
-        method(delay)
+        method()
         if time.time() > close_time:
             break
 
