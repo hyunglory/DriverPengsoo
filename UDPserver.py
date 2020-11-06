@@ -63,6 +63,8 @@ def exeCarFunc(data, delay=0.0001):
             rightRotate(delay)
         elif(secondData == "LeftRotate"):
             leftRotate(delay)
+        elif(secondData == "Stop"):
+            carStop()
         else:
             carStop()    
 
