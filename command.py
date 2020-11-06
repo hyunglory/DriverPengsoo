@@ -16,6 +16,15 @@ class Command:
         self.STOP           = '그만'
         self.END            = '종료'
         self.NEXT           = '다음'
+        self.FOWARD           = '다음'
+        self.REVERSE           = '다음'
+        self.LEFT           = '다음'
+        self.RIGHT           = '다음'
+        self.DIR1          = '다음'
+        self.DIR5           = '다음'
+        self.DIR7           = '다음'
+        self.DIR11           = '다음'
+        
 
 
 
