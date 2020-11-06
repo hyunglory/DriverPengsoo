@@ -16,14 +16,15 @@ class Command:
         self.STOP           = '그만'
         self.END            = '종료'
         self.NEXT           = '다음'
-        self.FOWARD           = '다음'
-        self.REVERSE           = '다음'
-        self.LEFT           = '다음'
-        self.RIGHT           = '다음'
-        self.DIR1          = '다음'
-        self.DIR5           = '다음'
-        self.DIR7           = '다음'
-        self.DIR11           = '다음'
+        self.FOWARD         = '전진'
+        self.REVERSE        = '후진'
+        self.LEFT           = '좌측이동'
+        self.RIGHT          = '우측이동'
+        self.DIR1           = '1시방향이동'
+        self.DIR5           = '5시방향이동'
+        self.DIR7           = '7시방향이동'
+        self.DIR11          = '11시방향이동'
+        self.STOP           = '정지'
         
 
 
