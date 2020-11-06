@@ -4,7 +4,7 @@ from MecanumDriver import *
 
 
 ECHO_PORT = 9999
-BUFSIZE = 1024
+BUFSIZE = 256
 
 def server():
     if len(sys.argv) > 2:
@@ -20,7 +20,7 @@ def server():
     
     # 준비 완료 화면에 표시
     print ('udp echo server ready')
-
+    data = ''
     # 무한 루프 돌림
     while 1:
         # 클라이언트로 메시지가 도착하면 다음 줄로 넘어가고
@@ -30,7 +30,6 @@ def server():
         data = data.decode() # byte형을 string형태로
         print('server received %s from %r' % (data, addr))
         
-        # 분기처리
         exeCarFunc(data)
     
         # 받은 메시지를 클라이언트로 다시 전송
@@ -38,13 +37,13 @@ def server():
 
 #[Car]Foward
 #[Pso]
-def exeCarFunc(data, delay=0.0001):
+def exeCarFunc(data, delay=0.001):
     firstData = data[:5]        # [Car]
     secondData = data[5:]       # Foward
 
     if (firstData == "[Car]"):
-        if (secondData == "Forward"):
-            carForward(delay)
+        if (secondData == "Forword"):
+            startFor(carForward(delay),1)
         elif(secondData == "Reverse"):
             carReverse(delay)
         elif(secondData == "Left"):
@@ -71,8 +70,8 @@ def exeCarFunc(data, delay=0.0001):
     # elif (firstData == "[Pso]"):
     #     if
 
-    else: 
-        carStop()
+    #else: 
+    #    carStop()
     
     
 
