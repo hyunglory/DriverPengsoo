@@ -43,7 +43,7 @@ def exeCarFunc(data, delay=0.001):
 
     if (firstData == "[Car]"):
         if (secondData == "Forward"):
-            carForward(delay)
+            carForward(delay, 1)
         elif(secondData == "Reverse"):
             carReverse(delay)
         elif(secondData == "Left"):
