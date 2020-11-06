@@ -48,109 +48,150 @@ class MotorFunction:
         GPIO.output(self.pul,GPIO.LOW)
         time.sleep(0.0005)
 
-def carForward(delay):
-    motorFL.forwardon()
-    motorFR.forwardon()    
-    motorRL.forwardon()
-    motorRR.forwardon()
-    time.sleep(delay)
-    motorFL.forwardoff()
-    motorFR.forwardoff()    
-    motorRL.forwardoff()
-    motorRR.forwardoff()
-    time.sleep(delay)
+def carForward(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.forwardon()     #    
+        motorFR.forwardon()     #    
+        motorRL.forwardon()     #
+        motorRR.forwardon()     #
+        time.sleep(delay)       #
+        motorFL.forwardoff()    #
+        motorFR.forwardoff()    #
+        motorRL.forwardoff()    #
+        motorRR.forwardoff()    #
+        time.sleep(delay)       #
+        if time.time() > close_time:
+            break
+   
 
-def carReverse(delay):
-    motorFL.reverseon()
-    motorFR.reverseon()    
-    motorRL.reverseon()
-    motorRR.reverseon()
-    time.sleep(delay)
-    motorFL.reverseoff()
-    motorFR.reverseoff()    
-    motorRL.reverseoff()
-    motorRR.reverseoff()
-    time.sleep(delay)
+def carReverse(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.reverseon()
+        motorFR.reverseon()    
+        motorRL.reverseon()
+        motorRR.reverseon()
+        time.sleep(delay)
+        motorFL.reverseoff()
+        motorFR.reverseoff()    
+        motorRL.reverseoff()
+        motorRR.reverseoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
     
-def carLeft(delay):
-    motorFL.reverseon()
-    motorFR.forwardon()
-    motorRL.forwardon()
-    motorRR.reverseon()
-    time.sleep(delay)
-    motorFL.reverseoff()
-    motorFR.forwardoff()
-    motorRL.forwardoff()
-    motorRR.reverseoff()
-    time.sleep(delay)
+def carLeft(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.reverseon()
+        motorFR.forwardon()
+        motorRL.forwardon()
+        motorRR.reverseon()
+        time.sleep(delay)
+        motorFL.reverseoff()
+        motorFR.forwardoff()
+        motorRL.forwardoff()
+        motorRR.reverseoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
     
-def carRight(delay):
-    motorFL.forwardon()
-    motorFR.reverseon()
-    motorRL.reverseon()
-    motorRR.forwardon()
-    time.sleep(delay)
-    motorFL.forwardoff()
-    motorFR.reverseoff()
-    motorRL.reverseoff()
-    motorRR.forwardoff()
-    time.sleep(delay)
+def carRight(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.forwardon()
+        motorFR.reverseon()
+        motorRL.reverseon()
+        motorRR.forwardon()
+        time.sleep(delay)
+        motorFL.forwardoff()
+        motorFR.reverseoff()
+        motorRL.reverseoff()
+        motorRR.forwardoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
 
-def carDir11(delay):  # 11시 
-    motorFR.forwardon()
-    motorRL.forwardon()
-    time.sleep(delay)
-    motorFR.forwardoff()
-    motorRL.forwardoff()
-    time.sleep(delay)
+def carDir11(delay, sec):  # 11시 
+    close_time = time.time() + sec
+    while True:
+        motorFR.forwardon()
+        motorRL.forwardon()
+        time.sleep(delay)
+        motorFR.forwardoff()
+        motorRL.forwardoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
     
-def carDir1(delay):   # 1시
-    motorFL.forwardon()
-    motorRR.forwardon()
-    time.sleep(delay)
-    motorFL.forwardoff()
-    motorRR.forwardoff()
-    time.sleep(delay)
+def carDir1(delay, sec):   # 1시
+    close_time = time.time() + sec
+    while True:
+        motorFL.forwardon()
+        motorRR.forwardon()
+        time.sleep(delay)
+        motorFL.forwardoff()
+        motorRR.forwardoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
     
-def carDir7(delay):  # 7시 
-    motorFL.reverseon()
-    motorRR.reverseon()
-    time.sleep(delay)
-    motorFL.reverseoff()
-    motorRR.reverseoff()
-    time.sleep(delay)
+def carDir7(delay, sec):  # 7시 
+    close_time = time.time() + sec
+    while True:
+        motorFL.reverseon()
+        motorRR.reverseon()
+        time.sleep(delay)
+        motorFL.reverseoff()
+        motorRR.reverseoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
 
-def carDir5(delay):  # 5시
-    motorFR.reverseon()
-    motorRL.reverseon()
-    time.sleep(delay)
-    motorFR.reverseoff()
-    motorRL.reverseoff()
-    time.sleep(delay)
+def carDir5(delay, sec):  # 5시
+    close_time = time.time() + sec
+    while True:
+        motorFR.reverseon()
+        motorRL.reverseon()
+        time.sleep(delay)
+        motorFR.reverseoff()
+        motorRL.reverseoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
 
-def rightRotate(delay):
-    motorFL.forwardon()
-    motorFR.reverseon()
-    motorRL.forwardon()
-    motorRR.reverseon()
-    time.sleep(delay)
-    motorFL.forwardoff()
-    motorFR.reverseoff()
-    motorRL.forwardoff()
-    motorRR.reverseoff()
-    time.sleep(delay)
+def rightRotate(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.forwardon()
+        motorFR.reverseon()
+        motorRL.forwardon()
+        motorRR.reverseon()
+        time.sleep(delay)
+        motorFL.forwardoff()
+        motorFR.reverseoff()
+        motorRL.forwardoff()
+        motorRR.reverseoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
 
-def leftRotate(delay):
-    motorFL.reverseon()
-    motorFR.forwardon()
-    motorRL.reverseon()
-    motorRR.forwardon()
-    time.sleep(delay)
-    motorFL.reverseoff()
-    motorFR.forwardoff()
-    motorRL.reverseoff()
-    motorRR.forwardoff()
-    time.sleep(delay)
+def leftRotate(delay, sec):
+    close_time = time.time() + sec
+    while True:
+        motorFL.reverseon()
+        motorFR.forwardon()
+        motorRL.reverseon()
+        motorRR.forwardon()
+        time.sleep(delay)
+        motorFL.reverseoff()
+        motorFR.forwardoff()
+        motorRL.reverseoff()
+        motorRR.forwardoff()
+        time.sleep(delay)
+        if time.time() > close_time:
+            break
     
 def carStop():
     motorFL.stop()
@@ -176,13 +217,12 @@ def carTestForward():
     motorRL.Testforward()
     motorRR.Testforward()
 
-def startFor(method,delay):  # delay초 동안만 실행
-    delay = delay
-    close_time = time.time() + delay
-    while True:
-        method()
-        if time.time() > close_time:
-            break
+#def startFor(method,sec):  # sec 초 동안만 실행
+#    close_time = time.time() + sec
+#    while True:
+#        method()
+#        if time.time() > close_time:
+#            break
 
 motorFL=MotorFunction(22, 27, 17)
 motorFR=MotorFunction(25, 24, 23)
