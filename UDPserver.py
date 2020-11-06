@@ -45,23 +45,23 @@ def exeCarFunc(data, delay=0.001):
         if (secondData == "Forward"):
             carForward(delay, 1)
         elif(secondData == "Reverse"):
-            carReverse(delay)
+            carReverse(delay, 1)
         elif(secondData == "Left"):
-            carLeft(delay)
+            carLeft(delay, 1)
         elif(secondData == "Right"):
-            carRight(delay)
+            carRight(delay, 1)
         elif(secondData == "Dir11"):   
-            carDir11(delay) 
+            carDir11(delay, 1) 
         elif(secondData == "Dir1"):
-            carDir1(delay)
+            carDir1(delay, 1)
         elif(secondData == "Dir7"):
-            carDir7(delay)
+            carDir7(delay, 1)
         elif(secondData == "Dir5"):   
-            carDir5(delay)
+            carDir5(delay, 1)
         elif(secondData == "RightRotate"):
-            rightRotate(delay)
+            rightRotate(delay, 1)
         elif(secondData == "LeftRotate"):
-            leftRotate(delay)
+            leftRotate(delay, 1)
         elif(secondData == "Stop"):
             carStop()
         else:
