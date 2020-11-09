@@ -30,14 +30,14 @@ def server():
         data = data.decode() # byte형을 string형태로
         print('server received %s from %r' % (data, addr))
         
-        exeCarFunc(data)
+        exeCarFunc(data, 0.005)
     
         # 받은 메시지를 클라이언트로 다시 전송
         #s.sendto(data, addr)
 
 #[Car]Foward
 #[Pso]
-def exeCarFunc(data, delay=0.001):
+def exeCarFunc(data, delay=0.0001):
     firstData = data[:5]        # [Car]
     secondData = data[5:]       # Foward
 
