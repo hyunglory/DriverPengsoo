@@ -193,7 +193,7 @@ def leftRotate_sec(delay, sec):
         if time.time() > close_time:
             break
 
-def carForward(delay, sec):
+def carForward(delay):
     motorFL.forwardon()     #    
     motorFR.forwardon()     #    
     motorRL.forwardon()     #
@@ -207,7 +207,7 @@ def carForward(delay, sec):
         
    
 
-def carReverse(delay, sec):
+def carReverse(delay):
     motorFL.reverseon()
     motorFR.reverseon()    
     motorRL.reverseon()
@@ -220,7 +220,7 @@ def carReverse(delay, sec):
     time.sleep(delay)
         
     
-def carLeft(delay, sec):
+def carLeft(delay):
     motorFL.reverseon()
     motorFR.forwardon()
     motorRL.forwardon()
@@ -232,7 +232,7 @@ def carLeft(delay, sec):
     motorRR.reverseoff()
     time.sleep(delay)
     
-def carRight(delay, sec):
+def carRight(delay):
     motorFL.forwardon()
     motorFR.reverseon()
     motorRL.reverseon()
@@ -244,7 +244,7 @@ def carRight(delay, sec):
     motorRR.forwardoff()
     time.sleep(delay)
 
-def carDir11(delay, sec):  # 11시 
+def carDir11(delay):  # 11시 
     motorFR.forwardon()
     motorRL.forwardon()
     time.sleep(delay)
@@ -253,7 +253,7 @@ def carDir11(delay, sec):  # 11시
     time.sleep(delay)
 
     
-def carDir1(delay, sec):   # 1시
+def carDir1(delay):   # 1시
     motorFL.forwardon()
     motorRR.forwardon()
     time.sleep(delay)
@@ -262,7 +262,7 @@ def carDir1(delay, sec):   # 1시
     time.sleep(delay)
 
     
-def carDir7(delay, sec):  # 7시 
+def carDir7(delay):  # 7시 
     motorFL.reverseon()
     motorRR.reverseon()
     time.sleep(delay)
@@ -271,7 +271,7 @@ def carDir7(delay, sec):  # 7시
     time.sleep(delay)
 
 
-def carDir5(delay, sec):  # 5시
+def carDir5(delay):  # 5시
     motorFR.reverseon()
     motorRL.reverseon()
     time.sleep(delay)
@@ -280,7 +280,7 @@ def carDir5(delay, sec):  # 5시
     time.sleep(delay)
  
 
-def rightRotate(delay, sec):
+def rightRotate(delay):
     motorFL.forwardon()
     motorFR.reverseon()
     motorRL.forwardon()
@@ -292,7 +292,7 @@ def rightRotate(delay, sec):
     motorRR.reverseoff()
     time.sleep(delay)
 
-def leftRotate(delay, sec):
+def leftRotate(delay):
     motorFL.reverseon()
     motorFR.forwardon()
     motorRL.reverseon()
