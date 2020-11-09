@@ -1,2 +1,2 @@
-print("hi")
-print("how are you?")
+print("hi!")
+print("테스트입니다")
