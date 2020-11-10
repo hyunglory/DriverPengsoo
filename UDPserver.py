@@ -1,78 +1,113 @@
+import socket
 import sys
-from socket import *
-from MecanumDriver import *
+import MecanumDriver
+from command import Command
+from command import Device
+from mongodb import MongoDB
 
+class server:
+    def __init__(self):
+        self.PORT = 9999
+        self.BUFSIZE = 256
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.server.bind(('', self.PORT))
+        print ('[Server] Pengsoo Server Ready!')
+        self.onLineServer()
+        self.command = Command()
+        self.device = Device()
+        self.db = MongoDB()
 
-ECHO_PORT = 9999
-BUFSIZE = 256
+    # 데이터 검증
+    def validateData(self, data):
+        ret = False
+        if (data.notnull()):
+            return False
+        data = data.strip()
+        print("")
+        return ret
 
-def server():
-    if len(sys.argv) > 2:
-        port = eval(sys.argv[2])
+    # 분기문
+    def controllData(self, data):        
+        start_index = data.find('[')
+        data = data[start_index:]
+        end_index = data.find("]")
+        who = data[:end_index]
+        cmd = data[end_index+1:]
+        print("who:",who)
 
-    else:
-        port = ECHO_PORT
+        if (who == "[Car]"):
 
-    s = socket(AF_INET, SOCK_DGRAM)
-    
-    # 포트 설정
-    s.bind(('', port))
-    
-    # 준비 완료 화면에 표시
-    print ('udp echo server ready')
-    data = ''
-    # 무한 루프 돌림
-    while 1:
-        # 클라이언트로 메시지가 도착하면 다음 줄로 넘어가고
-        # 그렇지 않다면 대기(Blocking)
-        data, addr = s.recvfrom(BUFSIZE)
+            delay = 0.005 # 테스트중..
+            sec = 0.1 #테스트중..
+            
+            if (cmd == self.command.FOWARD):
+                MecanumDriver.carForward(delay)
+            elif(cmd == self.command.REVERSE):
+                MecanumDriver.carReverse(delay)
+            elif(cmd == self.command.LEFT):
+                MecanumDriver.carLeft(delay)
+            elif(cmd == self.command.RIGHT):
+                MecanumDriver.carRight(delay)
+            elif(cmd == self.command.DIR1):
+                MecanumDriver.carDir1(delay)
+            elif(cmd == self.command.DIR5):
+                MecanumDriver.carDir5(delay)
+            elif(cmd == self.command.DIR7):
+                MecanumDriver.carDir7(delay)
+            elif(cmd == self.command.DIR11):
+                MecanumDriver.carDir11(delay)
+            elif(cmd == self.command.STOP):
+                MecanumDriver.carStop()
+            else:
+                MecanumDriver.carStop()
 
-        data = data.decode() # byte형을 string형태로
-        print('server received %s from %r' % (data, addr))
-        
-        exeCarFunc(data, 0.005)
-    
-        # 받은 메시지를 클라이언트로 다시 전송
-        #s.sendto(data, addr)
+            outputStr = "자동차 이동명령("+cmd+") 실행"
+            self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
+           
+        elif (who == "[PS]"):
+            if (cmd == self.command.P_UP):
+                MecanumDriver.carForward_sec(delay, sec)
+            elif(cmd == self.command.P_DOWN):
+                MecanumDriver.carReverse_sec(delay, sec)
+            elif(cmd == self.command.p_LEFT):
+                MecanumDriver.carLeft_sec(delay, sec)
+            elif(cmd == self.command.P_RIGHT):
+                MecanumDriver.carRight_sec(delay, sec)
+            elif(cmd == self.command.P_STOP):
+                MecanumDriver.carStop()
 
-#[Car]Foward
-#[Pso]
-def exeCarFunc(data, delay=0.0001):
-    firstData = data[:5]        # [Car]
-    secondData = data[5:]       # Foward
+            outputStr = "펭수 음성명령("+cmd+") 실행"
+            self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
 
-    if (firstData == "[Car]"):
-        if (secondData == "Forward"):
-            carForward(delay)
-        elif(secondData == "Reverse"):
-            carReverse(delay, 1)
-        elif(secondData == "Left"):
-            carLeft(delay, 1)
-        elif(secondData == "Right"):
-            carRight(delay, 1)
-        elif(secondData == "Dir11"):   
-            carDir11(delay, 1) 
-        elif(secondData == "Dir1"):
-            carDir1(delay, 1)
-        elif(secondData == "Dir7"):
-            carDir7(delay, 1)
-        elif(secondData == "Dir5"):   
-            carDir5(delay, 1)
-        elif(secondData == "RightRotate"):
-            rightRotate(delay, 1)
-        elif(secondData == "LeftRotate"):
-            leftRotate(delay, 1)
-        elif(secondData == "Stop"):
-            carStop()
         else:
-            carStop()    
+            outputStr = "[미처리] 알수없는 명령("+cmd+") 실행"
+            self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
+            print(outputStr)
 
-    # elif (firstData == "[Pso]"):
-    #     if
+    # 서버 통신
+    def onLineServer(self):
+        try:
+            while True:
+                # 클라이언트로 메시지가 도착하면 다음 줄로 넘어가고
+                # 그렇지 않다면 대기(Blocking)
+                data, addr = self.server.recvfrom(self.BUFSIZE)                
+                # 받은 메시지와 클라이언트 주소 화면에 출력
+                print('[Server] Received Data : %r from %r' % (data, addr))
 
-    #else: 
-    #    carStop()
-    
-    
+                # 데이터검증(쓰레기제거)
+                self.validateData(data)
 
-server()
+                # 분기처리
+                self.controllData(data)            
+
+                # 받은 메시지를 클라이언트로 다시 전송
+                #server.sendto(data, addr)
+        except:
+            print("[Server] Exception Error!!!", sys.exc_info())    
+
+
+
+if __name__ == "__main__":
+    sv = server()
+
+
