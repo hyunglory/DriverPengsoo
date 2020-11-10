@@ -343,7 +343,6 @@ motorRL=MotorFunction(26, 19, 13)
 motorRR=MotorFunction(21, 20, 16)
 
 
-<<<<<<< HEAD
 #if __name__ == '__main__':
     # try:
     #     while True:
@@ -360,23 +359,5 @@ motorRR=MotorFunction(21, 20, 16)
 
     # except KeyboardInterrupt:
     #     carStop()      
-=======
-if __name__ == '__main__':
-    try:
-        while True:
-            Fsensor = getDistance1()
-            Bsensor = getDistance2()
-
-            startFor(carTestForward,1)
-            if Fsensor < 100:
-                carStop()
-                carDirRev()
-            elif Bsensor < 100:
-                carStop()
-                carDirFor()
-
-    except KeyboardInterrupt:
-        carStop()      
->>>>>>> ede73d7bc7140b9e1edf35101bbb33d2212f2dfe
 
     
