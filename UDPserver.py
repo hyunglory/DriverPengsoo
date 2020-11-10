@@ -38,12 +38,12 @@ class server:
         end_index = data.find("]")
         who = data[:end_index+1]
         cmd = data[end_index+1:]
-        print("who:",who)
-        print("cmd",cmd)
+        print("who:", who)
+        print("cmd:", cmd)
 
         if (who == "[Car]"):
 
-            delay = 0.0005 # 테스트중..
+            delay = 0.0001 # 테스트중..
             sec = 0.5 #테스트중..
             
             if (cmd == command.FOWARD):
@@ -68,6 +68,8 @@ class server:
                 MecanumDriver.leftRotate_sec(delay,sec)    
             elif(cmd == command.STOP):
                 MecanumDriver.carStop()
+            elif(cmd == command.TEST):
+                MecanumDriver.carTest()
             else:
                 MecanumDriver.carStop()
 

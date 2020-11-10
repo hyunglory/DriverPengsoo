@@ -194,6 +194,21 @@ def leftRotate_sec(delay, sec):
         if time.time() > close_time:
             break
 
+def carTest():
+    delay = 0.0005
+    sec = 2
+    carForward_sec(delay, sec)
+    carLeft_sec(delay, sec)
+    carForward_sec(delay, sec)
+    carRight_sec(delay, sec)
+    carReverse_sec(delay, sec)
+    leftRotate_sec(delay, sec)
+    carLeft_sec(delay, sec)
+    carForward_sec(delay, sec)
+    carRight_sec(delay, sec)
+    carReverse_sec(delay, sec)
+    rightRotate_sec(delay, sec)
+
 def carForward(delay):
     motorFL.forwardon()     #    
     motorFR.forwardon()     #    

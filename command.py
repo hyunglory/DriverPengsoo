@@ -19,6 +19,7 @@ class Command:
         self.RIGHT_ROT      = 'RightRotate'
         self.LEFT_ROT       = 'LeftRotate'
         self.STOP           = 'stop'
+        self.TEST           = 'TEST'
 
         # 펭수 명령어
         self.SPEAK          = '음성명령'
