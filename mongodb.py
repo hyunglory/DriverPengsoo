@@ -12,7 +12,7 @@ ex) {"hi", "Hi, How are you?", "speaker", new Date()}
 class MongoDB:
 
     def __init__(self):    
-        self.host = "192.168.0.168"
+        self.host = "127.0.0.1"
         self.port = "27017"
 
         self.mongo = MongoClient(self.host, int(self.port))

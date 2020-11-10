@@ -7,7 +7,21 @@
 class Command:
     
     def __init__(self):
-        # 값을 변경할 수 없도록 상수 사용(대문자+언더바)
+        # 자동차 명령어
+        self.FOWARD         = 'Forward'
+        self.REVERSE        = 'Reverse'
+        self.LEFT           = 'Left'
+        self.RIGHT          = 'Right'
+        self.DIR1           = 'Dir1'
+        self.DIR5           = 'Dir5'
+        self.DIR7           = 'Dir7'
+        self.DIR11          = 'Dir11'
+        self.RIGHT_ROT      = 'RightRotate'
+        self.LEFT_ROT       = 'LeftRotate'
+        self.STOP           = 'stop'
+
+        # 펭수 명령어
+        self.SPEAK          = '음성명령'
         self.START_MUSIC    = '노래'
         self.GREETING       = '인사'
         self.AGAIN          = '다시'
@@ -16,22 +30,17 @@ class Command:
         self.STOP           = '그만'
         self.END            = '종료'
         self.NEXT           = '다음'
-        self.FOWARD         = '전진'
-        self.REVERSE        = '후진'
-        self.LEFT           = '좌측이동'
-        self.RIGHT          = '우측이동'
-        self.DIR1           = '1시방향이동'
-        self.DIR5           = '5시방향이동'
-        self.DIR7           = '7시방향이동'
-        self.DIR11          = '11시방향이동'
-        self.STOP           = '정지'
-        
 
-
-
+        self.P_UP           = '앞으로'
+        self.P_DOWN         = '뒤로'
+        self.P_RIGHT        = '오른쪽으로'
+        self.p_LEFT         = '왼쪽으로'
+        self.P_STOP         = '멈춰'
 
 class Device:
 
     def __init__(self):
-        self.SPEAKER = 'SPEAKER'
-        self.CAMERA = 'CAMERA'
+        self.SPEAKER    = 'SPEAKER'
+        self.CAMERA     = 'CAMERA'
+        self.MOTOR      = 'MOTOR'
+        self.GYRO       = 'GYRO'
