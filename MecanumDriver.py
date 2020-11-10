@@ -49,6 +49,7 @@ class MotorFunction:
         time.sleep(0.0005)
 
 def carForward_sec(delay, sec):
+    print("carForward_sec")
     close_time = time.time() + sec
     while True:
         motorFL.forwardon()     #    
@@ -342,7 +343,7 @@ motorRL=MotorFunction(26, 19, 13)
 motorRR=MotorFunction(21, 20, 16)
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # try:
     #     while True:
     #         Fsensor = getDistance1()
@@ -358,8 +359,5 @@ if __name__ == '__main__':
 
     # except KeyboardInterrupt:
     #     carStop()      
-
-    
-    
 
     

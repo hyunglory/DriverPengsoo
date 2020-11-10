@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import socket
 import sys
 import MecanumDriver
@@ -36,37 +37,42 @@ class server:
         data = data[start_index:]
         end_index = data.find("]")
         who = data[:end_index+1]
-        cmd = data[end_index+2:]
+        cmd = data[end_index+1:]
         print("who:",who)
+        print("cmd",cmd)
 
         if (who == "[Car]"):
 
-            delay = 0.005 # 테스트중..
-            sec = 0.1 #테스트중..
+            delay = 0.0005 # 테스트중..
+            sec = 0.5 #테스트중..
             
             if (cmd == command.FOWARD):
-                MecanumDriver.carForward(delay)
+                MecanumDriver.carForward_sec(delay,sec)
             elif(cmd == command.REVERSE):
-                MecanumDriver.carReverse(delay)
+                MecanumDriver.carReverse_sec(delay,sec)
             elif(cmd == command.LEFT):
-                MecanumDriver.carLeft(delay)
+                MecanumDriver.carLeft_sec(delay,sec)
             elif(cmd == command.RIGHT):
-                MecanumDriver.carRight(delay)
+                MecanumDriver.carRight_sec(delay,sec)
             elif(cmd == command.DIR1):
-                MecanumDriver.carDir1(delay)
+                MecanumDriver.carDir1_sec(delay,sec)
             elif(cmd == command.DIR5):
-                MecanumDriver.carDir5(delay)
+                MecanumDriver.carDir5_sec(delay,sec)
             elif(cmd == command.DIR7):
-                MecanumDriver.carDir7(delay)
+                MecanumDriver.carDir7_sec(delay,sec)
             elif(cmd == command.DIR11):
-                MecanumDriver.carDir11(delay)
+                MecanumDriver.carDir11_sec(delay,sec)
+            elif(cmd == command.RIGHT_ROT):
+                MecanumDriver.rightRotate_sec(delay,sec)
+            elif(cmd == command.LEFT_ROT):
+                MecanumDriver.leftRotate_sec(delay,sec)    
             elif(cmd == command.STOP):
                 MecanumDriver.carStop()
             else:
                 MecanumDriver.carStop()
 
             outputStr = "자동차 이동명령("+cmd+") 실행"
-            db.insert_command_one(cmd, outputStr, device.MOTOR)
+            # db.insert_command_one(cmd, outputStr, device.MOTOR)
            
         elif (who == "[PS]"):
             if (cmd == command.P_UP):
@@ -81,11 +87,11 @@ class server:
                 MecanumDriver.carStop()
 
             outputStr = "펭수 음성명령("+cmd+") 실행"
-            db.insert_command_one(cmd, outputStr, device.MOTOR)
+            # db.insert_command_one(cmd, outputStr, device.MOTOR)
 
         else:
             outputStr = "[미처리] 알수없는 명령("+cmd+") 실행"
-            db.insert_command_one(cmd, outputStr, device.MOTOR)
+            # db.insert_command_one(cmd, outputStr, device.MOTOR)
             print(outputStr)
 
     # 서버 통신
