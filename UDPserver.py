@@ -49,7 +49,7 @@ class server:
         print("cmd:", cmd)
 
         delay = 0.005   # 테스트중..
-        sec = 0.1       # 테스트중..
+        sec = 0.5       # 테스트중..
         
         # 자동차 
         if (who == "[Car]"):
