@@ -197,7 +197,7 @@ def leftRotate_sec(delay, sec):
 
 def carTest():
     delay = 0.0005
-    sec = 2
+    sec = 3
     carForward_sec(delay, sec)
     carLeft_sec(delay, sec)
     carForward_sec(delay, sec)
