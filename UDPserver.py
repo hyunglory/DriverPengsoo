@@ -56,21 +56,21 @@ class server:
         if (who == "[Car]"):
             #self.carLogic(cmd, delay)
             if (cmd == self.command.FOWARD):
-                MecanumDriver.carForward(delay)
+                MecanumDriver.carForward_sec(delay, sec)
             elif(cmd == self.command.REVERSE):
-                MecanumDriver.carReverse(delay)
+                MecanumDriver.carReverse_sec(delay, sec)
             elif(cmd == self.command.LEFT):
-                MecanumDriver.carLeft(delay)
+                MecanumDriver.carLeft_sec(delay, sec)
             elif(cmd == self.command.RIGHT):
-                MecanumDriver.carRight(delay)
+                MecanumDriver.carRight_sec(delay, sec)
             elif(cmd == self.command.DIR1):
-                MecanumDriver.carDir1(delay)
+                MecanumDriver.carDir1_sec(delay, sec)
             elif(cmd == self.command.DIR5):
-                MecanumDriver.carDir5(delay)
+                MecanumDriver.carDir5_sec(delay, sec)
             elif(cmd == self.command.DIR7):
-                MecanumDriver.carDir7(delay)
-            elif(cmd == self.command.DIR11):
-                MecanumDriver.carDir11(delay)
+                MecanumDriver.carDir7_sec(delay, sec)
+            elif(cmd == self.command.DIR11, sec):
+                MecanumDriver.carDir11_sec(delay, sec)
             elif(cmd == self.command.STOP):
                 MecanumDriver.carStop()
             elif(cmd == self.command.TEST):
