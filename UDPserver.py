@@ -22,7 +22,6 @@ class server:
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server.bind(('', self.PORT))
         print ('[Server] Pengsoo Server Ready!')        
-
     # 데이터 검증
     def validateData(self, data):
         if (data == None):
@@ -44,7 +43,7 @@ class server:
         end_index = data.find("]")
 
         data = data[start_index:]        
-        who = data[:end_index]
+        who = data[:end_index+1]
         cmd = data[end_index+1:]
         print("who:",who)
         print("cmd:", cmd)
@@ -79,7 +78,7 @@ class server:
                 MecanumDriver.carStop()
 
             outputStr = "자동차 이동명령("+cmd+") 실행"
-            self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
+            #self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
             
         # 펭수
         elif (who == "[PS]"):
@@ -111,7 +110,7 @@ class server:
 
         else:
             outputStr = "[미처리] 알수없는 명령("+cmd+") 실행"
-            # db.insert_command_one(cmd, outputStr, device.MOTOR)
+            db.insert_command_one(cmd, outputStr, device.MOTOR)
             print(outputStr)
 
     # 서버 통신
