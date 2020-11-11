@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
 import time
 from sensor import getDistance1
@@ -49,6 +50,7 @@ class MotorFunction:
         time.sleep(0.0005)
 
 def carForward_sec(delay, sec):
+    print("carForward_sec")
     close_time = time.time() + sec
     while True:
         motorFL.forwardon()     #    
@@ -192,6 +194,21 @@ def leftRotate_sec(delay, sec):
         time.sleep(delay)
         if time.time() > close_time:
             break
+
+def carTest():
+    delay = 0.0005
+    sec = 3
+    carForward_sec(delay, sec)
+    carLeft_sec(delay, sec)
+    carForward_sec(delay, sec)
+    carRight_sec(delay, sec)
+    carReverse_sec(delay, sec)
+    leftRotate_sec(delay, sec)
+    carLeft_sec(delay, sec)
+    carForward_sec(delay, sec)
+    carRight_sec(delay, sec)
+    carReverse_sec(delay, sec)
+    rightRotate_sec(delay, sec)
 
 def carForward(delay):
     motorFL.forwardon()     #    
@@ -342,24 +359,21 @@ motorRL=MotorFunction(26, 19, 13)
 motorRR=MotorFunction(21, 20, 16)
 
 
-if __name__ == '__main__':
-    try:
-        while True:
-            Fsensor = getDistance1()
-            Bsensor = getDistance2()
+#if __name__ == '__main__':
+    # try:
+    #     while True:
+    #         Fsensor = getDistance1()
+    #         Bsensor = getDistance2()
 
-            startFor(carTestForward,1)
-            if Fsensor < 100:
-                carStop()
-                carDirRev()
-            elif Bsensor < 100:
-                carStop()
-                carDirFor()
+    #         startFor(carTestForward,1)
+    #         if Fsensor < 100:
+    #             carStop()
+    #             carDirRev()
+    #         elif Bsensor < 100:
+    #             carStop()
+    #             carDirFor()
 
-    except KeyboardInterrupt:
-        carStop()      
-
-    
-    
+    # except KeyboardInterrupt:
+    #     carStop()      
 
     
