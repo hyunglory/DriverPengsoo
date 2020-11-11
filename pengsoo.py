@@ -2,7 +2,7 @@ import speech_recognition as sr     # STT 음성인식
 import pyttsx3                      # TTS 음성변환
 
 
-class pengsoo:
+class Pengsoo:
     def __init__(self):
         self.r = sr.Recognizer()     #음성인식 인스턴스
         self.engine = pyttsx3.init() #음성변환 인스턴스
@@ -20,6 +20,7 @@ class pengsoo:
             print("[펭수] 이해할 수 없습니다.")
         except sr.RequestError as e:
             print("[펭수] 구글 음성 인식으로부터 결과를 요청할 수 없습니다; {0}".format(e))
+        return audio
 
     def speakVoice(self, message):
         self.engine.say(message)
@@ -27,5 +28,5 @@ class pengsoo:
 
 
 if __name__ == "__main__":
-    ps = pengsoo()
+    ps = Pengsoo()
     ps.listenVoice()

@@ -21,21 +21,18 @@ class Command:
         self.STOP           = 'stop'
 
         # 펭수 명령어
-        self.SPEAK          = '음성명령'
-        self.START_MUSIC    = '노래'
-        self.GREETING       = '인사'
-        self.AGAIN          = '다시'
-        self.CAPTURE        = '사진'
-        self.START          = '시작'
-        self.STOP           = '그만'
-        self.END            = '종료'
-        self.NEXT           = '다음'
-
+        self.P_SPEAK        = 'Speak'
+        self.P_LOGIN        = 'Login'
         self.P_UP           = '앞으로'
         self.P_DOWN         = '뒤로'
         self.P_RIGHT        = '오른쪽으로'
         self.p_LEFT         = '왼쪽으로'
         self.P_STOP         = '멈춰'
+
+class Voice:
+    def __init__(self):
+        self.WELCOME        = 'Welcome to the world of Driver Pengsu.'
+        self.START          = 'The car is moving now. Watch your surroundings.'
 
 class Device:
 

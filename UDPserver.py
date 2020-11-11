@@ -1,45 +1,56 @@
 import socket
 import sys
 import MecanumDriver
-from command import Command
+from command import *
 from command import Device
 from mongodb import MongoDB
+from pengsoo import Pengsoo
 
 class server:
     def __init__(self):
+        self.command = Command()
+        self.device = Device()
+        self.db = MongoDB()
+        self.ps = Pengsoo()
+        self.voice = Voice()
+
         self.PORT = 9999
         self.BUFSIZE = 256
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server.bind(('', self.PORT))
-        print ('[Server] Pengsoo Server Ready!')
-        self.onLineServer()
-        self.command = Command()
-        self.device = Device()
-        self.db = MongoDB()
+        print ('[Server] Pengsoo Server Ready!')        
 
     # 데이터 검증
     def validateData(self, data):
-        ret = False
-        if (data.notnull()):
+        if (data.isnull()):
+            print("[validateData] 비정상 데이터 - NULL")
             return False
         data = data.strip()
-        print("")
-        return ret
+        return False
+
+    def carLogic(self, cmd, delay):
+        pass
+
+    def pengsooLogic(self, cmd, delay, sec):
+        pass        
 
     # 분기문
     def controllData(self, data):        
         start_index = data.find('[')
-        data = data[start_index:]
         end_index = data.find("]")
+
+        data = data[start_index:]        
         who = data[:end_index]
         cmd = data[end_index+1:]
         print("who:",who)
+        print("cmd:", cmd)
 
+        delay = 0.005   # 테스트중..
+        sec = 0.1       # 테스트중..
+        
+        # 자동차 
         if (who == "[Car]"):
-
-            delay = 0.005 # 테스트중..
-            sec = 0.1 #테스트중..
-            
+            #self.carLogic(cmd, delay)
             if (cmd == self.command.FOWARD):
                 MecanumDriver.carForward(delay)
             elif(cmd == self.command.REVERSE):
@@ -63,9 +74,19 @@ class server:
 
             outputStr = "자동차 이동명령("+cmd+") 실행"
             self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
-           
+            
+        # 펭수
         elif (who == "[PS]"):
-            if (cmd == self.command.P_UP):
+            #self.pengsooLogic(cmd, delay, sec)
+            outputStr = ""
+            if(cmd == self.command.P_LOGIN):
+                self.ps.speakVoice(self.voice.WELCOME)
+            elif(cmd == self.command.P_SPEAK):                
+                retText = self.ps.listenVoice()
+                outputStr = "I was given a command to'"+retText+"'"
+                self.ps.speakVoice(outputStr)
+
+            elif (cmd == self.command.P_UP):
                 MecanumDriver.carForward_sec(delay, sec)
             elif(cmd == self.command.P_DOWN):
                 MecanumDriver.carReverse_sec(delay, sec)
@@ -76,7 +97,10 @@ class server:
             elif(cmd == self.command.P_STOP):
                 MecanumDriver.carStop()
 
-            outputStr = "펭수 음성명령("+cmd+") 실행"
+            if(outputStr != ""):
+                outputStr = "펭수 음성명령("+cmd+") 실행"
+            else:
+                pass
             self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
 
         else:
@@ -94,8 +118,9 @@ class server:
                 # 받은 메시지와 클라이언트 주소 화면에 출력
                 print('[Server] Received Data : %r from %r' % (data, addr))
 
-                # 데이터검증(쓰레기제거)
-                self.validateData(data)
+                # 데이터검증
+                if(self.validateData(data) == False):
+                    continue
 
                 # 분기처리
                 self.controllData(data)            
@@ -109,5 +134,6 @@ class server:
 
 if __name__ == "__main__":
     sv = server()
+    sv.onLineServer()
 
 
