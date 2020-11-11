@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
 import time
-from sensor import getDistance1
-from sensor import getDistance2
+#from sensor import getDistance1
+#from sensor import getDistance2
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -202,12 +202,19 @@ def carTest():
     carLeft_sec(delay, sec)
     carForward_sec(delay, sec)
     carRight_sec(delay, sec)
-    carReverse_sec(delay, sec)
-    leftRotate_sec(delay, sec)
+    carForward_sec(delay, sec)
+
+    carDir5_sec(delay, sec)
+    carDir7_sec(delay, sec)
+    carDir5_sec(delay, sec)
+    carDir7_sec(delay, sec)
+
     carLeft_sec(delay, sec)
     carForward_sec(delay, sec)
     carRight_sec(delay, sec)
     carReverse_sec(delay, sec)
+    
+    leftRotate_sec(delay, sec)
     rightRotate_sec(delay, sec)
 
 def carForward(delay):
