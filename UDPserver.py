@@ -25,7 +25,7 @@ class server:
 
     # 데이터 검증
     def validateData(self, data):
-        if (data.isnull()):
+        if (data == None):
             print("[validateData] 비정상 데이터 - NULL")
 
             return False
