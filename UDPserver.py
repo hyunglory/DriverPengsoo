@@ -97,11 +97,7 @@ class server:
 
         else:
             outputStr = "[미처리] 알수없는 명령("+cmd+") 실행"
-<<<<<<< HEAD
             self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
-=======
-            # db.insert_command_one(cmd, outputStr, device.MOTOR)
->>>>>>> c17cc80db67b58b02e06f06502348532769e49a8
             print(outputStr)
 
     # 서버 통신
