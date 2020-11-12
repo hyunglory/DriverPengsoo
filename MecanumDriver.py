@@ -34,7 +34,7 @@ class MotorFunction:
             GPIO.output(self.pul, GPIO.LOW)
             
     def stop(self):
-        GPIO.output(self.ena, GPIO.LOW)
+        GPIO.output(self.ena, GPIO.LOW)        
 
     def DirRev(self):
         GPIO.output(self.direction, GPIO.LOW)
@@ -50,7 +50,6 @@ class MotorFunction:
         time.sleep(0.0005)
 
 def carForward_sec(delay, sec):
-    print("carForward_sec")
     close_time = time.time() + sec
     while True:
         motorFL.forwardon()     #    
@@ -366,7 +365,16 @@ motorRL=MotorFunction(26, 19, 13)
 motorRR=MotorFunction(21, 20, 16)
 
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
+    while True:
+        carForward_sec(0.001,2)
+        carReverse_sec(0.001,2)
+        carRight_sec(0.001,2)
+        carLeft_sec(0.001,2)
+        carDir11_sec(0.001,2)
+        carDir1_sec(0.001,2)
+        carDir5_sec(0.001,2)
+        carDir7_sec(0.001,2)
     # try:
     #     while True:
     #         Fsensor = getDistance1()

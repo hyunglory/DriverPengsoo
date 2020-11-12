@@ -24,6 +24,7 @@ class server:
         print ('[Server] Pengsoo Server Ready!')        
     # 데이터 검증
     def validateData(self, data):
+        
         if (data == None):
             print("[validateData] 비정상 데이터 - NULL")
 
@@ -48,13 +49,13 @@ class server:
         print("who:",who)
         print("cmd:", cmd)
 
-        delay = 0.005   # 테스트중..
+        delay = 0.0005   # 테스트중..
         sec = 0.5       # 테스트중..
         
         # 자동차 
         if (who == "[Car]"):
             #self.carLogic(cmd, delay)
-            if (cmd == self.command.FOWARD):
+            if (cmd == self.command.FOWARD):               
                 MecanumDriver.carForward_sec(delay, sec)
             elif(cmd == self.command.REVERSE):
                 MecanumDriver.carReverse_sec(delay, sec)
@@ -68,8 +69,12 @@ class server:
                 MecanumDriver.carDir5_sec(delay, sec)
             elif(cmd == self.command.DIR7):
                 MecanumDriver.carDir7_sec(delay, sec)
-            elif(cmd == self.command.DIR11, sec):
+            elif(cmd == self.command.DIR11):
                 MecanumDriver.carDir11_sec(delay, sec)
+            elif(cmd == self.command.RIGHT_ROT):
+                MecanumDriver.rightRotate_sec(delay, sec)
+            elif(cmd == self.command.LEFT_ROT):
+                MecanumDriver.leftRotate_sec(delay, sec)
             elif(cmd == self.command.STOP):
                 MecanumDriver.carStop()
             elif(cmd == self.command.TEST):
@@ -110,7 +115,7 @@ class server:
 
         else:
             outputStr = "[미처리] 알수없는 명령("+cmd+") 실행"
-            db.insert_command_one(cmd, outputStr, device.MOTOR)
+            self.db.insert_command_one(cmd, outputStr, self.device.MOTOR)
             print(outputStr)
 
     # 서버 통신
@@ -127,7 +132,7 @@ class server:
                 print('[Server] Received Data : %r from %r' % (data, addr))
 
                 # 데이터검증
-                if(self.validateData(data) == False):
+                if(self.validateData(data) != False):
                     continue
 
                 # 분기처리
