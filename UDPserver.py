@@ -6,8 +6,7 @@ from command import Command
 from command import Device
 from mongodb import MongoDB
 
-class server:
-    
+class server: 
 
     def __init__(self):
         self.PORT = 9999
@@ -15,8 +14,6 @@ class server:
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server.bind(('', self.PORT))
         print ('[Server] Pengsoo Server Ready!')
-        self.onLineServer()
-        
 
     # 데이터 검증
     def validateData(self, data):        
@@ -41,11 +38,11 @@ class server:
         print("who:", who)
         print("cmd:", cmd)
 
-        if (who == "[Car]"):
-
-            delay = 0.0005 # 테스트중..
-            sec = 0.5 #테스트중..
-            
+        delay = 0.0005   # 테스트중..
+        sec = 0.5       # 테스트중..
+        
+        # 자동차 
+        if (who == "[Car]"):            
             if (cmd == command.FOWARD):
                 MecanumDriver.carForward_sec(delay,sec)
             elif(cmd == command.REVERSE):
@@ -109,8 +106,9 @@ class server:
                 # 받은 메시지와 클라이언트 주소 화면에 출력
                 print('[Server] Received Data : %r from %r' % (data, addr))
 
-                # 데이터검증(쓰레기제거)
-                self.validateData(data)                
+                # 데이터검증
+                if(self.validateData(data) != False):
+                    continue
 
                 # 분기처리
                 self.controllData(data)            
