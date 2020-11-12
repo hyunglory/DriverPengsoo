@@ -43,7 +43,7 @@ class server:
 
         if (who == "[Car]"):
 
-            delay = 0.0001 # 테스트중..
+            delay = 0.0005 # 테스트중..
             sec = 0.5 #테스트중..
             
             if (cmd == command.FOWARD):
