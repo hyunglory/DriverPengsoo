@@ -4,7 +4,10 @@ import sys
 import MecanumDriver
 from command import Command
 from command import Device
+from command import Voice
 from mongodb import MongoDB
+from pengsoo import Pengsoo
+
 
 class server: 
 
@@ -19,8 +22,8 @@ class server:
     def validateData(self, data):        
         ret = False
         
-        if (data == ""):
-            return False
+        if (data == None):
+            print("[validateData] 비정상 데이터 - NULL")            
         else:
             data = data.strip()
             ret = True
@@ -31,7 +34,10 @@ class server:
     def controllData(self, data):  
         command = Command()
         device = Device()
-        db = MongoDB()      
+        db = MongoDB()
+        voice = Voice()
+        ps = Pengsoo()
+
         start_index = data.find('[')
         data = data[start_index:]
         end_index = data.find("]")
@@ -76,7 +82,18 @@ class server:
             # db.insert_command_one(cmd, outputStr, device.MOTOR)
            
         elif (who == "[PS]"):
-            if (cmd == command.P_UP):
+            if(cmd == command.P_LOGIN):
+                ps.speakVoice(voice.WELCOME)
+            elif(cmd == command.P_SPEAK):                
+                retText = ps.listenVoice()
+                #retText를 받고 자동차 제어 처리 필요
+                MecanumDriver.carForward_sec(delay,sec) # 테스트용으로 앞으로 가도록 구현
+
+
+                outputStr = voice.LISTEN
+                ps.speakVoice(outputStr)
+
+            elif (cmd == command.P_UP):
                 MecanumDriver.carForward_sec(delay, sec)
             elif(cmd == command.P_DOWN):
                 MecanumDriver.carReverse_sec(delay, sec)
