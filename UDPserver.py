@@ -19,10 +19,12 @@ class server:
     def validateData(self, data):        
         ret = False
         
-        if (data != ""):
+        if (data == ""):
             return False
-        data = data.strip()
-        print("")
+        else:
+            data = data.strip()
+            ret = True
+        
         return ret
 
     # 분기문
@@ -38,8 +40,8 @@ class server:
         print("who:", who)
         print("cmd:", cmd)
 
-        delay = 0.0005   # 테스트중..
-        sec = 0.5       # 테스트중..
+        delay = 0.0005
+        sec = 0.5
         
         # 자동차 
         if (who == "[Car]"):            
@@ -97,8 +99,6 @@ class server:
     def onLineServer(self):
         try:
             while True:
-                # 클라이언트로 메시지가 도착하면 다음 줄로 넘어가고
-                # 그렇지 않다면 대기(Blocking)
                 data, addr = self.server.recvfrom(self.BUFSIZE)  
 
                 # 받은 데이터 Byte형식 String으로 변환
@@ -111,9 +111,7 @@ class server:
                     continue
 
                 # 분기처리
-                self.controllData(data)            
-
-
+                self.controllData(data)
 
                 # 받은 메시지를 클라이언트로 다시 전송
                 #server.sendto(data, addr)

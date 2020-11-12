@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
 ** 명령어를 담당하는 클래스 **
 ** 작성요령 **
@@ -32,8 +33,9 @@ class Command:
 
 class Voice:
     def __init__(self):
-        self.WELCOME        = 'Welcome to the world of Driver Pengsu.'
+        self.WELCOME        = 'Welcome to Driver Pengsu.'
         self.START          = 'The car is moving now. Watch your surroundings.'
+        self.LISTEN         = 'Give your order within 5 seconds.'
 
 class Device:
 
