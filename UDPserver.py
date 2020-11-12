@@ -139,5 +139,6 @@ class server:
 
 if __name__ == "__main__":
     sv = server()
+    sv.onLineServer()
 
 
