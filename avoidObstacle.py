@@ -111,7 +111,7 @@ def avoidMode(delay, sec):
                     
                         
 if __name__ == '__main__':
-    try:
+    while True:
         delay = 0.0005
         sec = 0.5
 
