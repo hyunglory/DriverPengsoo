@@ -94,6 +94,8 @@ def avoidMode(delay, sec):
                 elif (carFunc[0] == "carRight"):
                     MecanumDriver.carRight_sec(delay, sec)
                     del carFunc[0]
+                elif (carFunc == None):
+                    MecanumDriver.carStop()
                 else:
                     MecanumDriver.carStop()
 
