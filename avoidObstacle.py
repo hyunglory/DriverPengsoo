@@ -63,7 +63,7 @@ def checkAll(): # 전체 센서 값 저장
 def avoidMode(delay, sec):
     
     while True : # 현재 그 좌표아니면
-        #go(좌표+)
+        
         checkAll()
 
         if (FL0 < FowardBehindLimit or FR0 < FowardBehindLimit):
@@ -117,4 +117,6 @@ if __name__ == '__main__':
 
         MecanumDriver.carForward_sec(delay, sec)
         avoidMode(delay, sec)
-        
+
+# go(목적지)
+# avoidMode()를 반복해야 할듯
