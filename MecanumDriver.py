@@ -360,13 +360,6 @@ def carTestForward():
     motorRL.Testforward()
     motorRR.Testforward()
 
-#def startFor(method,sec):  # sec 초 동안만 실행
-#    close_time = time.time() + sec
-#    while True:
-#        method()
-#        if time.time() > close_time:
-#            break
-
 motorFL=MotorFunction(22, 27, 17)
 motorFR=MotorFunction(25, 24, 23)
 motorRL=MotorFunction(26, 19, 13)
