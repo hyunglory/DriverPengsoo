@@ -34,7 +34,10 @@ class MotorFunction:
             GPIO.output(self.pul, GPIO.LOW)
             
     def stop(self):
-        GPIO.output(self.ena, GPIO.HIGH)        
+        GPIO.output(self.ena, GPIO.HIGH)
+
+    def stopfree(self):
+        GPIO.output(self.ena, GPIO.LOW)
 
     def DirRev(self):
         GPIO.output(self.direction, GPIO.LOW)
@@ -341,6 +344,12 @@ def carStop():
     motorFR.stop()
     motorRL.stop()
     motorRR.stop()
+
+def carStopFree():
+    motorFL.stopfree()
+    motorFR.stopfree()
+    motorRL.stopfree()
+    motorRR.stopfree()
 
 def carDirFor():
     motorFL.DirFor()
