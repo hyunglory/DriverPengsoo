@@ -130,7 +130,7 @@ class server:
                 print('[Server] Received Data : %r from %r' % (data, addr))
 
                 # 데이터검증
-                if(self.validateData(data) != False):
+                if(self.validateData(data) == False):
                     continue
 
                 # 분기처리
