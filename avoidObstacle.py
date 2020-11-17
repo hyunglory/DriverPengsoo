@@ -15,7 +15,7 @@ diagonalLimit = 15
 carFunc = []
 
 def returnCarFunc(delay, sec):
-    for i in carFunc:
+    for i in range(len(carFunc)):
         if (carFunc[i] == "carLeft"):
             carFunc[i] == "carRight"
         elif (carFunc[i] == "carRight"):
@@ -23,13 +23,14 @@ def returnCarFunc(delay, sec):
         else :
             carFunc[i] == "wrong value"
     
-    for i in carFunc:
+    for i in range(len(carFunc)):
         if (carFunc[i] == "carLeft"):
             MecanumDriver.carLeft_sec(delay, sec)
         elif (carFunc[i] == "carRight"):
             MecanumDriver.carRight_sec(delay, sec)
         else :
             MecanumDriver.carStop()
+
     
     
 
@@ -119,6 +120,7 @@ if __name__ == '__main__':
 
         MecanumDriver.carForward_sec(delay, sec)
         avoidMode(delay, sec)
+        #returnCarFunc(delay, sec)
 
 # go(목적지)
 # avoidMode()를 반복해야 할듯
