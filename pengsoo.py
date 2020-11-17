@@ -27,8 +27,9 @@ class Pengsoo:
         return audio
 
     def speakVoice(self, message):
-        self.engine.setProperty('rate', 200)     # setting up new voice rate
+        self.engine.setProperty('rate', 120)     # setting up new voice rate
         self.engine.say(message)
+        self.engine.runAndWait()
         print("[펭수] "+message)
 
 
