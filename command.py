@@ -20,7 +20,7 @@ class Command:
         self.RIGHT_ROT      = 'RightRotate'
         self.LEFT_ROT       = 'LeftRotate'
         self.STOP           = 'stop'
-        self.TEST           = 'TEST'
+        self.TEST           = 'Test'
 
         # 펭수 명령어
         self.P_SPEAK        = 'Speak'
