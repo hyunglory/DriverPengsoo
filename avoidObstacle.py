@@ -1,6 +1,5 @@
 #import sensor
 #import servo
-#import MecanumDriver
 #import RPi.GPIO as GPIO
 import time
 import sys
@@ -27,13 +26,16 @@ def returnCarFunc(delay, sec):
     
     for i in range(len(carFunc)):
         if (carFunc[i] == "carLeft"):
-            MecanumDriver.carLeft_sec(delay, sec)
+            # MecanumDriver.carLeft_sec(delay, sec)
+            client("[Car]Left")
+            
         elif (carFunc[i] == "carRight"):
-            MecanumDriver.carRight_sec(delay, sec)
+            # MecanumDriver.carRight_sec(delay, sec)
+            client("[Car]Right")
         else :
-            MecanumDriver.carStop()
+            # MecanumDriver.carStop()
+            client("[Car]stop")
 
-    
     
 
 def checkFront():
@@ -160,8 +162,6 @@ if __name__ == '__main__':
         # avoidMode(delay, sec)
         # time.sleep(0.5)
         # returnCarFunc(delay, sec)
-
-
 
 # go(목적지)
 # avoidMode()를 반복해야 할듯
