@@ -15,7 +15,7 @@ diagonalLimit = 15
 
 carFunc = []
 
-def returnCarFunc(delay, sec):
+def returnCarFunc():
     for i in range(len(carFunc)):
         if (carFunc[i] == "carLeft"):
             carFunc[i] == "carRight"
@@ -24,18 +24,22 @@ def returnCarFunc(delay, sec):
         else :
             carFunc[i] == "wrong value"
     
-    for i in range(len(carFunc)):
-        if (carFunc[i] == "carLeft"):
-            # MecanumDriver.carLeft_sec(delay, sec)
-            client("[Car]Left")
-            
-        elif (carFunc[i] == "carRight"):
-            # MecanumDriver.carRight_sec(delay, sec)
-            client("[Car]Right")
-        else :
-            # MecanumDriver.carStop()
-            client("[Car]stop")
-
+#     for i in range(len(carFunc)):
+#         if (carFunc[i] == "carLeft"):
+#             client("[Car]Left")
+#         elif (carFunc[i] == "carRight"):
+#             client("[Car]Right")
+#         else :
+#             client("[Car]stop")
+    if (carFunc[0] == "carLeft"):
+        client("[Car]Left")
+        del carFunc[0]
+    elif (carFunc[0] == "carRight"):
+        client("[Car]Right")
+        del carFunc[0]
+    else : 
+        client("[Car]Stop")
+        del carFunc[0]
     
 
 def checkFront():
@@ -46,7 +50,6 @@ def checkFront():
     LR0 = sensor.LRgetDistance()
 
 def checkAll(): # 전체 센서 값 저장
-    print("checkAll")
     servo.pwmGo(0)    # 앞뒤 방향
     FL0 = sensor.FLgetDistance()
     FR0 = sensor.FRgetDistance()
@@ -71,62 +74,46 @@ def avoidMode(delay, sec):
         
         checkAll()
 
-        if (FL0 < FowardBehindLimit or FR0 < FowardBehindLimit):
-            # MecanumDriver.carStop()
-            client("[Car]stop")
-            checkAll()
-
+        if (FL45 > FR45):
             if (FL90 < sideLimit or LL90 < sideLimit):
-                # MecanumDriver.carRight_sec(delay, sec)
                 client("[Car]Right")
                 carFunc.append("carRight")    
             elif (FR90 < sideLimit or LR90 < sideLimit):
-                # MecanumDriver.carLeft_sec(delay, sec)
                 client("[Car]Left")
                 carFunc.append("carLeft")
-            elif (FL45 > FR45):
-                # MecanumDriver.carLeft_sec(delay, sec)
+            else
                 client("[Car]Left")
                 carFunc.append("carLeft")
-            else :
-                # MecanumDriver.carRight_sec(delay, sec)
+        elif (FL45 < FR45):
+             if (FL90 < sideLimit or LL90 < sideLimit):
                 client("[Car]Right")
-                carFunc.append("carRight") 
+                carFunc.append("carRight")    
+            elif (FR90 < sideLimit or LR90 < sideLimit):
+                client("[Car]Left")
+                carFunc.append("carLeft")
+            else
+                client("[Car]Right")
+                carFunc.append("carRight")
+            
+
         else:
-            # MecanumDriver.carForward_sec(delay,sec)
-            client("[Car]Forward")
-            checkAll()
-
             if(FL90 > sideLimit and FR90 > sideLimit and LL90 > sideLimit and LR90 > sideLimit):
-                returnCarFunc(delay, sec)
-                if (carFunc[0] == "carLeft"):
-                    # MecanumDriver.carLeft_sec(delay,sec)
-                    client("[Car]Left")
-                    del carFunc[0]
-                elif (carFunc[0] == "carRight"):
-                    # MecanumDriver.carRight_sec(delay, sec)
-                    client("[Car]Right")
-                    del carFunc[0]
-                elif (carFunc == None):
-                    # MecanumDriver.carStop()
-                    client("[Car]stop")
+                if (not carFunc):
+                    client("[Car]Forward")
+                elif (carFunc):
+                    returncarFunc()
                 else:
-                    # MecanumDriver.carStop()
                     client("[Car]stop")
-
             else:
                 minVal = min(FL90, FR90, LL90, LR90)
                 if (minVal < sideLimit):
                     if (minVal == FL90 or minVal == LL90): 
-                        # MecanumDriver.carRight_sec(delay, sec)
                         client("[Car]Right")
                         carFunc.append("carRight")
                     elif (minVal == FR90 or minVal == LR90):
-                        # MecanumDriver.carLeft_sec(delay,sec)
                         client("[Car]Left")
                         carFunc.append("carLeft")
                     else:
-                        # MecanumDriver.carStop()
                         client("[Car]stop")
                     
                         
@@ -152,11 +139,7 @@ def client(data):
 
 if __name__ == '__main__':
     while True:
-        delay = 0.0005
-        sec = 0.5
-
-        client("[Car]Forward")
-        time.sleep(0.5)
+        avoidMode()
         
         # MecanumDriver.carForward_sec(delay, sec)
         # avoidMode(delay, sec)
