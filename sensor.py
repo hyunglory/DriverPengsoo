@@ -4,14 +4,15 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)  
-FLTRIG = 17 #FL
-FLECHO = 27
-FRTRIG = 14   #FR
-FRECHO = 15
-LLTRIG = 10
-LLECHO = 9
-LRTRIG = 23
-LRECHO = 24
+
+FLTRIG = 27 #FL
+FLECHO = 22
+FRTRIG = 23   #FR
+FRECHO = 24
+LLTRIG = 19
+LLECHO = 26
+LRTRIG = 20
+LRECHO = 21
 
 GPIO.setup(FLTRIG, GPIO.OUT)
 GPIO.setup(FLECHO, GPIO.IN)
@@ -25,17 +26,20 @@ GPIO.setup(LRECHO, GPIO.IN)
 GPIO.setwarnings(False)
 
 def FLgetDistance():
+    
     GPIO.output(FLTRIG, False)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(FLTRIG, True)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(FLTRIG, False)
-
+    
     while GPIO.input(FLECHO) == 0:
         pulse_start = time.time()
         
     while GPIO.input(FLECHO) == 1:
         pulse_end = time.time()
+        
+        
 
     pulse_duration = pulse_end-pulse_start
     distance = round(pulse_duration * 17150, 2)
@@ -44,9 +48,9 @@ def FLgetDistance():
 
 def FRgetDistance():
     GPIO.output(FRTRIG, False)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(FRTRIG, True)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(FRTRIG, False)
 
     while GPIO.input(FRECHO) == 0:
@@ -62,15 +66,16 @@ def FRgetDistance():
 
 def LLgetDistance():
     GPIO.output(LLTRIG, False)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(LLTRIG, True)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(LLTRIG, False)
 
     while GPIO.input(LLECHO) == 0:
         pulse_start = time.time()
         
     while GPIO.input(LLECHO) == 1:
+        
         pulse_end = time.time()
 
     pulse_duration = pulse_end-pulse_start
@@ -80,9 +85,9 @@ def LLgetDistance():
 
 def LRgetDistance():
     GPIO.output(LRTRIG, False)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(LRTRIG, True)
-    time.sleep(0.000001)
+    time.sleep(0.0001)
     GPIO.output(LRTRIG, False)
 
     while GPIO.input(LRECHO) == 0:
@@ -97,10 +102,17 @@ def LRgetDistance():
     return distance
 
 
-# if __name__ == '__main__':
-#     try:
-#         while True:
+if __name__ == '__main__':
+    try:
+        while True:
+            
+            print("FL " + str(FLgetDistance()))
+            print("FR " + str(FRgetDistance()))
+            print("LL " + str(LLgetDistance()))
+            print("LR " + str(LRgetDistance()))
+            time.sleep(0.5)
+            print("------------------------------------------")
             
 
-#     except KeyboardInterrupt:
-#         GPIO.cleanup()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
