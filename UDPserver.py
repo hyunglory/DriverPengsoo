@@ -103,8 +103,8 @@ class server:
         cmd = data[end_index+1:]
         print("who:" + who + ", cmd:" + cmd)
 
-        delay = 0.0005
-        sec = 0.5
+        delay = 0.002
+        sec = 1.5
         
         # 자동차 
         if (who == "[Car]"):            

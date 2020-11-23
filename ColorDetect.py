@@ -1,19 +1,23 @@
 import cv2
 import numpy as np
+import time
+#import MecanumDriver
 
 ###### 노란색 영역지정(추적 예상 색 지정)
-yellow_low = np.array([20,50,50])
+yellow_low = np.array([20,100,100])
 yellow_upper = np.array([35,255,255])
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
+delay=0.002
+sec=0.5
+
 while cap.isOpened():    
     ret, img = cap.read()
     img_draw = img.copy()
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)    
-        
 
     ##### 노란색 마스크 생성
     mask_yellow = cv2.inRange(hsv, yellow_low, yellow_upper)
@@ -29,10 +33,15 @@ while cap.isOpened():
 
 
     ##### 노란색 contour 찾기
-    res_yellow_BGR=cv2.cvtColor(res_yellow, cv2.COLOR_HSV2BGR) # 노란색 
+    res_yellow_BGR=cv2.cvtColor(res_yellow, cv2.COLOR_HSV2BGR)
     res_gray=cv2.cvtColor(res_yellow_BGR, cv2.COLOR_BGR2GRAY)
+    ##### 커널크기 지정
     kernel = np.ones((4,4),np.uint8)
+
+    ##### 모폴로지 연산 OPEN 밝은영역 감소 CLOSE 밝은영역 증가
     res_thres = cv2.morphologyEx(res_gray, cv2.MORPH_OPEN, kernel)
+
+    #####
     res, res_thres= cv2.threshold(res_thres,80,255,cv2.THRESH_BINARY_INV)
     contours,_ = cv2.findContours(res_thres,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
@@ -49,10 +58,17 @@ while cap.isOpened():
             if(count >= 1):
                 mean_x = np.mean(rect_x)
                 print(mean_x)
-            
+                # if (mean_x > 440):
+                #     #MecanumDriver.leftRotate_sec(delay,sec)
+                #     print("leftRotate_sec")
+                #     time.sleep(0.5)
+                # elif (mean_x < 220):
+                #     #MecanumDriver.rightRotate_sec(delay,sec)
+                #     print("rightRotate_sec")
+                #     time.sleep(0.5)
             count+=1
             
-    print("--------------------------------------------------------------")
+    #print("--------------------------------------------------------------")
 
         
     #cv2.imshow('BGR',res_yellow_BGR)
@@ -62,6 +78,7 @@ while cap.isOpened():
     #cv2.imshow('gray',res_gray)
     cv2.imshow('img',img)
     key = cv2.waitKey(1) & 0xff
+
 
 cap.release()
 cv2.destroyAllWindows()
