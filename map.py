@@ -26,7 +26,7 @@ def getData():
     for i in range(0, 181, 1):    
         ii = i / 180 * 100
         if (0 <= ii and ii <= 100):
-            servoPwm.ChangeDutyCycle(ii)
+            servoPwm.ChangeDutyCycle(servo.angle_to_percent(ii))
             firstData[i] = int(sensor.MAPgetDistance())
         time.sleep(0.1)
 
