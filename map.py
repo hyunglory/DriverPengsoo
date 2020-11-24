@@ -8,8 +8,7 @@ import numpy as np
 
 mapServo = 5
 frequence = 50 
-# mapTrig = 2
-# mapEcho = 3
+
 
 height = 550
 width = 1000
@@ -28,7 +27,7 @@ def getData():
         ii = i / 180 * 100
         if (0 <= ii and ii <= 100):
             servoPwm.ChangeDutyCycle(ii)
-            firstData[i] = int(sensor.FLgetDistance())
+            firstData[i] = int(sensor.MAPgetDistance())
         time.sleep(0.1)
 
 # def getData180to0():   
@@ -80,7 +79,7 @@ def draw(data):
         else:
             continue
 
-        if ( 2 =< length[i] and length[i] < 500 ):        # Ranging distance: 2cm – 500 cm
+        if ( 2 =< length[i] and length[i] < 500 ):        # Ranging distance: 2cm – 500 cm, Effectual angle: <15°
             destination = (destX, destY)
             #cv2.line(img, start, destination, (255, 0, 0))
             cv2.circle(img, destination, 3, (0, 255, 0),-1)
