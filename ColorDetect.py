@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import time
-#import MecanumDriver
+
+import MecanumDriver
 
 ###### 노란색 영역지정(추적 예상 색 지정)
 yellow_low = np.array([20,100,100])
@@ -11,12 +12,13 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
+
 delay=0.002
 sec=0.5
 
 while cap.isOpened():    
     ret, img = cap.read()
-    img_draw = img.copy()
+    #img_draw = img.copy()
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)    
 
     ##### 노란색 마스크 생성
@@ -48,13 +50,28 @@ while cap.isOpened():
     #### 검출된 노란색에 사각형 그리기
     count=0
     rect_x=[]
+
+    collect_x = []
+    collect_y = []
+    add_x_w = []
+    add_y_h = []
+
+
+    second_size_rect = 0
+    first_size_rect = 0
+
     for i in contours:
         (x,y,w,h) = cv2.boundingRect(i)
 
-        if (w>=25 and h>=25 and w!=640 and h!=480):
+        if (w>=10 and h>=10 and w!=640 and h!=480):
             cv2.rectangle(img, (x,y), (x+w, y+h), (0,0,255), 3)
             print(x,y,w,h,"count:",count)
             rect_x.append(x)
+            collect_x.append(x)
+            collect_y.append(y)
+            add_x_w.append(x+w)
+            add_y_h.append(y+h)
+
             if(count >= 1):
                 mean_x = np.mean(rect_x)
                 print(mean_x)
@@ -67,18 +84,62 @@ while cap.isOpened():
                 #     print("rightRotate_sec")
                 #     time.sleep(0.5)
             count+=1
-            
-    #print("--------------------------------------------------------------")
 
+    x_min = 0
+    y_min = 0
+    x_w_max = 0
+    y_h_max = 0
+
+    
+
+    if (len(collect_x) != 0):
+        x_min = np.min(collect_x)
+        y_min = np.min(collect_y)
+        x_w_max = np.max(add_x_w)
+        y_h_max = np.max(add_y_h)
+    
+    cv2.rectangle(img, (x_min,y_min), (x_w_max, y_h_max), (0,255,0), 3)        
+    print("--------------------------------------------------------------")
+
+
+    center_y = int((y_min+y_h_max)/2)
+
+    size_rect = (x_w_max-x_min)*(y_h_max-y_min)
+    print("size_rect : ", size_rect)
+
+    
+    # #followPengsoo(delay, sec)
+
+    cv2.circle(img,(center_x,center_y),5,(0,255,255),-1)
+    print("center_x : ", center_x)
         
     #cv2.imshow('BGR',res_yellow_BGR)
-    cv2.imshow('GRAY',res_gray)
-    cv2.imshow('threshold',res_thres)
+    #cv2.imshow('GRAY',res_gray)
+    #cv2.imshow('threshold',res_thres)
     #cv2.imshow('threshold',res_thres)
     #cv2.imshow('gray',res_gray)
     cv2.imshow('img',img)
     key = cv2.waitKey(1) & 0xff
 
 
+    time.sleep(0.1)
+
 cap.release()
 cv2.destroyAllWindows()
+
+def followPengsoo(dalay,sec):
+    check_size = 70000
+    if (center_x == None or size_rect == None):
+        MecanumDriver.carStop()
+
+    if( center_x < 300):
+        MecanumDriver.leftRotate_sec(delay, sec)
+    elif(center_x > 440):
+        MecanumDriver.rightRotate_sec(delay, sec)
+    else:
+        if (size_rect < check_size):
+            MecanumDriver.carForward_sec(delay, sec)
+        else :
+            MecanumDriver.carStop()
+
+

@@ -21,6 +21,8 @@ class server:
         self.device = Device()
         self.db = MongoDB()
 
+        self.targetAddr = ''
+
     # 데이터 검증
     def validateData(self, data):        
         ret = False
@@ -104,8 +106,8 @@ class server:
         print("who:" + who + ", cmd:" + cmd)
 
         delay = 0.002
-        sec = 1.5
-        
+        sec = 0.5
+
         # 자동차 
         if (who == "[Car]"):            
             self.carFunc(cmd, command, delay, sec)
@@ -122,7 +124,8 @@ class server:
     def onLineServer(self):
         try:
             while True:
-                data, addr = self.server.recvfrom(self.BUFSIZE)  
+                data, addr = self.server.recvfrom(self.BUFSIZE)
+                self.targetAddr = addr
 
                 # 받은 데이터 Byte형식 String으로 변환
                 data=data.decode()
@@ -139,7 +142,20 @@ class server:
                 # 받은 메시지를 클라이언트로 다시 전송
                 #server.sendto(data, addr)
         except:
-            print("[Server] Exception Error!!!", sys.exc_info())    
+            print("[Server] Exception Error!!!", sys.exc_info())
+
+    # 안드로이드로 메시지 전송
+    @staticmethod
+    def sendMessage(cls, data):
+        try:
+            data = bytes(data, encoding = "utf-8")
+            cls.server.sendto(data, cls.targetAddr)
+        except:
+            print("[Server] Exception Error!!!", sys.exc_info()) 
+
+    @staticmethod
+    def getInstance():
+        return server()
 
 
 
