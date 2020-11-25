@@ -14,16 +14,19 @@ FLpwm_gpio = 5
 FRpwm_gpio = 18
 LLpwm_gpio = 19
 LRpwm_gpio = 26
+Map_gpio = 14
 
 GPIO.setup(FLpwm_gpio, GPIO.OUT)
 GPIO.setup(FRpwm_gpio, GPIO.OUT)
 #GPIO.setup(LLpwm_gpio, GPIO.OUT)
 #GPIO.setup(LRpwm_gpio, GPIO.OUT)
+GPIO.setup(Map_gpio, GPIO.OUT)
 
 FLpwm = GPIO.PWM(FLpwm_gpio, frequence)
 FRpwm = GPIO.PWM(FRpwm_gpio, frequence)
 #LLpwm = GPIO.PWM(LLpwm_gpio, frequence)
 #LRpwm = GPIO.PWM(LRpwm_gpio, frequence)
+MAPpwm = GPIO.PWM(Map_gpio, frequence)
 
 #Set function to calculate percent from angle
 def angle_to_percent (angle) :
@@ -65,12 +68,16 @@ def startFor(method,sec):  # sec 초 동안만 실행
 
 if __name__ == '__main__':
     while True:
-        pwmGo(0)
-        print("0도")
+        # pwmGo(0)
+        # print("0도")
+        # time.sleep(0.5)
+        # pwmGo(55)
+        # print("45도")
+        # time.sleep(0.5)
+        # pwmGo(110)
+        # print("90도")
+        # time.sleep(0.5)
+        MAPpwm.start(angle_to_percent(0))
         time.sleep(0.5)
-        pwmGo(55)
-        print("45도")
-        time.sleep(0.5)
-        pwmGo(110)
-        print("90도")
+        MAPpwm.ChangeDutyCycle(angle_to_percent(180))
         time.sleep(0.5)

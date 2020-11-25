@@ -13,6 +13,8 @@ LLTRIG = 19
 LLECHO = 26
 LRTRIG = 20
 LRECHO = 21
+MAPTRIG = 15
+MAPECHO = 18
 
 GPIO.setup(FLTRIG, GPIO.OUT)
 GPIO.setup(FLECHO, GPIO.IN)
@@ -22,8 +24,35 @@ GPIO.setup(LLTRIG, GPIO.OUT)
 GPIO.setup(LLECHO, GPIO.IN)
 GPIO.setup(LRTRIG, GPIO.OUT)
 GPIO.setup(LRECHO, GPIO.IN)
+GPIO.setup(MAPTRIG, GPIO.OUT)
+GPIO.setup(MAPECHO, GPIO.IN)
+
 
 GPIO.setwarnings(False)
+
+def MAPgetDistance():
+    
+    GPIO.output(MAPTRIG, False)
+    time.sleep(0.0001)
+    GPIO.output(MAPTRIG, True)
+    time.sleep(0.0001)
+    GPIO.output(MAPTRIG, False)
+    
+    while GPIO.input(MAPECHO) == 0:
+        pulse_start = time.time()
+        
+    while GPIO.input(MAPECHO) == 1:
+        pulse_end = time.time()
+        
+        
+
+    pulse_duration = pulse_end-pulse_start
+    distance = round(pulse_duration * 17150, 2)
+
+    if (distance > 500):
+        distance = 500
+
+    return distance
 
 def FLgetDistance():
     
