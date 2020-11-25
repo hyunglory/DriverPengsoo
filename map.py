@@ -5,34 +5,29 @@ import time
 import cv2
 import numpy as np
 
-class Mapping:
-    def __int__(self):
-        self.mapServo = 5
-        self.frequence = 50
-        self.height = 550
-        self.width = 1000
+firstData = {}
+height = 550
+width = 1000
 
-        GPIO.setup(self, self.mapServo, GPIO.OUT)
-        self.servoPwm = GPIO.PWM(self.mapServo, self.frequence)
-        self.servoPwm.start(servo.angle_to_percent(0))
-        
-        self.firstData = {}
-        self.secondData = {}        
+class Mapping:    
+
+    def __int__(self):       
+        pass       
     
     def getData(self):
-        self.servoPwm.start(servo.angle_to_percent(0))
+        servo.MAPpwm.start(servo.angle_to_percent(0))
         for i in range(0, 181, 1):    
-            ii = i / 180 * 100
-            if (0 <= ii and ii <= 100):
-                self.servoPwm.ChangeDutyCycle(servo.angle_to_percent(ii))
-                self.firstData[i] = int(sensor.MAPgetDistance())
-            time.sleep(0.1)
+            # ii = i / 180 * 100
+            # if (0 <= ii and ii <= 100):
+            servo.MAPpwm.ChangeDutyCycle(servo.angle_to_percent(i))
+            firstData[i] = int(sensor.MAPgetDistance())
+            time.sleep(0.01)
 
     def draw(self, data):
-        img = np.zeros((self.height, self.width, 3), np.uint8)
-        startX = self.width/2
+        img = np.zeros((height, width, 3), np.uint8)
+        startX = width/2
         startX = int(startX)
-        startY = self.height - 10
+        startY = height - 10
         startY = int(startY)
         start = (int(startX), (startY)) # (300,390)
 
@@ -51,8 +46,8 @@ class Mapping:
             angle.append(dataKey[i])
             length.append(valueKey[i])
             
-            destX = length[i] * np.cos(angle[i]*(np.pi/180))
-            destY = length[i] * np.sin(angle[i]*(np.pi/180))
+            destX = 4*length[i] * np.cos(angle[i]*(np.pi/180))
+            destY = 4*length[i] * np.sin(angle[i]*(np.pi/180))
             
             destX = int(destX)
             #print("destX" + str(destX))
@@ -82,7 +77,7 @@ if __name__ == '__main__':
     mp = Mapping()
     try:
         mp.getData()
-        mp.draw(mp.firstData)
+        mp.draw(firstData)
         
     except KeyboardInterrupt:
         GPIO.cleanup()
