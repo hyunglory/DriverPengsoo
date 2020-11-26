@@ -7,6 +7,7 @@ from command import Device
 from command import Voice
 from mongodb import MongoDB
 from pengsoo import Pengsoo
+from gyro import mpu6050
 
 
 class server: 
@@ -20,6 +21,7 @@ class server:
 
         self.device = Device()
         self.db = MongoDB()
+        self.mpu = mpu6050()
 
         self.targetAddr = ''
 
@@ -139,10 +141,19 @@ class server:
                 # 분기처리
                 self.controllData(data)
 
-                # 받은 메시지를 클라이언트로 다시 전송
-                #server.sendto(data, addr)
+                # 안드로이드로 전송(온도, 기울기, 방향)
+                # sendingArr = self.validateTemperature()
+                # self.server.sendto(sendingArr[0].encode(), addr)    #온도 전송
         except:
             print("[Server] Exception Error!!!", sys.exc_info())
+
+
+    def validateTemperature(self):
+        # 3개의 값을 가진 배열 리턴[온도, x축 각도, 방향]
+        return self.mpu.exeGyro()
+        
+
+
 
     # 안드로이드로 메시지 전송
     @staticmethod

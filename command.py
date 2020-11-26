@@ -10,6 +10,7 @@ class Command:
     def __init__(self):
         # 자동차 명령어
         self.FOWARD         = 'Forward'
+        
         self.REVERSE        = 'Reverse'
         self.LEFT           = 'Left'
         self.RIGHT          = 'Right'
@@ -19,8 +20,9 @@ class Command:
         self.DIR11          = 'Dir11'
         self.RIGHT_ROT      = 'RightRotate'
         self.LEFT_ROT       = 'LeftRotate'
-        self.STOP           = 'stop'
+        self.STOP           = 'Stop'
         self.TEST           = 'Test'
+        self.AUTO           = 'Auto'
 
         # 펭수 명령어
         self.P_SPEAK        = 'Speak'
