@@ -31,9 +31,7 @@ class mpu6050:
 
         self.bus = smbus.SMBus(1)                  
         self.bus.write_byte_data(self.DEV_ADDR, self.PWR_MGMT_1, 0)
-
-        self.temperature = 24.0
-
+        self.temperature = 0
 
     # Sub function
     # 1byte read
@@ -98,7 +96,6 @@ class mpu6050:
         z = z / 16384.0
         return [x, y, z]
 
-    #-----------------------------------
     def dist(self, a,b):
         return math.sqrt((a*a)+(b*b))
 
@@ -115,18 +112,16 @@ class mpu6050:
         return math.degrees(radians)
 
 
-
     #___________________________________________
     #20190413 모터콘트롤 함수부분 
-    def aa_bb(self, ):
+    def aa_bb(self):
     
         x_angle=self.get_x_rotation(accel_x, accel_y, accel_z)
         for i in range(3,13): #3에서 12까지 숫자 생성
 
             # desiredPosition=x_angle
             # DC=1./18*(desiredPosition)+7.3 #<<<7.3서보의 중간위치값 
-            # pwm.ChangeDutyCycle(DC)
-    #___________________________________________        
+            # pwm.ChangeDutyCycle(DC)   
             if x_angle > 3:
                 bb = "<<____"
             elif x_angle < -3:
@@ -135,7 +130,38 @@ class mpu6050:
                 bb = "__==__"
 
             return bb
-    #___________________________________________
+
+
+    def exeGyro(self):
+        try:        
+            while (1):
+                temp = self.get_temp()
+                add = (temp-4)
+                
+                accel_x,accel_y,accel_z = self.get_accel_data_g()
+                x_angle = self.get_x_rotation(accel_x, accel_y, accel_z) #y각도값
+                
+                bb = self.aa_bb() #모터콘트롤 함수호출 실행 
+            
+                print("Temp:%04.1f""`C"% add,
+                    "| Angle",
+                    "x:%3.2f " % self.get_x_rotation(accel_x, accel_y, accel_z),
+                    "Direction: %s"  % bb)
+            
+        #              "x:%06.3f " % get_x_rotation(accel_x, accel_y, accel_z),
+        #              "y:%06.3f " % get_y_rotation(accel_x, accel_y, accel_z),
+        #              "z:%06.3f " % get_z_rotation(accel_x, accel_y, accel_z),
+        #              "Dir.: %s"  % bb)
+        except KeyboardInterrupt:
+            print("     == stop ==")
+            mpu.pwm.stop()
+            GPIO.cleanup()
+
+        t = '%04.1f'% add
+        a = '%3.2f'% self.get_x_rotation(accel_x, accel_y, accel_z)
+        d = '%s'% bb
+                
+        return [str(t), str(a), d]
 
     
 
@@ -178,7 +204,6 @@ if __name__ == "__main__":
                 s.sendall(line.encode())
                 res = s.recv(1024)
                 print('send.....end....')
-
 
 
     except KeyboardInterrupt:
